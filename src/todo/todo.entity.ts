@@ -1,26 +1,26 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  JoinColumn,
-  ManyToOne,
-} from 'typeorm'
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm'
 import Lists from '../list/list.entity'
+import { ApiProperty } from '@nestjs/swagger'
 
 @Entity()
 class Todos {
+  @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number
 
+  @ApiProperty()
   @Column()
   listId: number
 
+  @ApiProperty()
   @Column()
   text: string
 
+  @ApiProperty()
   @Column({ default: false })
   completed: boolean
 
+  @ApiProperty()
   @Column()
   created_at: number
 
@@ -28,7 +28,6 @@ class Todos {
     cascade: true,
     eager: false, // auto add relations
   })
-  @JoinColumn()
   list: Lists
 }
 

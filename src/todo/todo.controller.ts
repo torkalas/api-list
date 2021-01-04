@@ -13,9 +13,10 @@ import { TodoService } from './todo.service'
 import Todos from './todo.entity'
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm'
 import { CreateTodoDto } from './dto/create-todo.dto'
-import { UpdateListDto } from '../list/dto/update-list.dto'
 import { UpdateTodoDto } from './dto/update-todo.dto'
+import { ApiBody, ApiTags } from '@nestjs/swagger'
 
+@ApiTags('todo')
 @Controller('todo')
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
@@ -28,20 +29,22 @@ export class TodoController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @Header('Cache-Control', 'none')
+  @ApiBody({ type: CreateTodoDto })
   create(@Body() data: CreateTodoDto): Promise<InsertResult> {
     return this.todoService.create(data)
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string): Promise<DeleteResult> {
-    return this.todoService.remove(id)
-  }
-
   @Put(':id')
+  @ApiBody({ type: UpdateTodoDto })
   update(
     @Body() data: UpdateTodoDto,
     @Param('id') id: string,
   ): Promise<UpdateResult> {
     return this.todoService.update(id, data)
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string): Promise<DeleteResult> {
+    return this.todoService.remove(id)
   }
 }
