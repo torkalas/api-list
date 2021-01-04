@@ -45,6 +45,22 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Keep App running using PM2 (AWS production)
+
+```bash
+# install pm2 global
+$ npm install pm2 -g
+
+# build app
+$ npm run build
+
+# run server
+$ npm run pm2:start
+
+# check status
+$ npm run pm2:status
+```
+
 ## Test
 
 ```bash
